@@ -5,14 +5,13 @@ Created on Tue Apr  7 12:02:29 2026
 @author: vasco
 """
 
-from university_class import University
-from graduate_class import Graduate
-from association_class import Association
-from membership_class import Membership
-
+from classes.university import University
+from classes.graduate import Graduate
+from classes.association import Association
+from classes.membership import Membership
 
 def main():
-    db = "universidades_alumni.db"
+    db = "data/universidades_alumni.db"
 
     print("--- 1. Lendo Base de Dados ---")
     try:

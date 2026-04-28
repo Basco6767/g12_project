@@ -4,7 +4,7 @@ Created on Thu Apr  2 17:07:56 2026
 
 @author: Maria
 """
-from gclass import Gclass
+from classes.gclass import Gclass
 class Association(Gclass):
   obj=dict()
   lst=list()

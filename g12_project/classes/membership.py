@@ -7,7 +7,7 @@ Created on Thu Apr  2 17:08:07 2026
 
 
 
-from gclass import Gclass
+from classes.gclass import Gclass
 
 
 
