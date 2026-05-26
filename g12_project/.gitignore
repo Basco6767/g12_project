@@ -1,0 +1,11 @@
+# gitignore é utilizado para ignorar certos ficheiros ou pastas
+
+# Pastas a ignorar
+.spyproject
+__pycache__/
+.ipynb_checkpoints/
+
+# Ficheiros a ignorar
+datafile.py
+*.pyc
+*.db-journal
