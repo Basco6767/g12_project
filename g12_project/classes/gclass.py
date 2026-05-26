@@ -44,18 +44,36 @@ class Gclass:
         if code in cls.obj:
             del cls.obj[code]
             cls.lst.remove(code)
+            
+            
+            if cls.pos >= len(cls.lst) and len(cls.lst) > 0:
+                cls.pos = len(cls.lst) - 1
 
             try:
                 conn = sqlite3.connect(cls.db_name)
                 cursor = conn.cursor()
                 
-           
-                pk_column = cls.att[0] 
-                if pk_column.startswith('_'):
-                    pk_column = pk_column[1:]
+              
+                if cls.__name__ == "Membership" or (isinstance(code, str) and "_" in code):
+                  
+                    parts = code.split('_')
+                    pk_column1 = cls.att[0].lstrip('_')
+                    pk_column2 = cls.att[1].lstrip('_')
+                    
+                    cursor.execute(
+                        f"DELETE FROM {cls.__name__} WHERE {pk_column1} = ? AND {pk_column2} = ?", 
+                        (parts[0], parts[1])
+                    )
+                else:
+                    
+                    pk_column = cls.att[0] 
+                    if pk_column.startswith('_'):
+                        pk_column = pk_column[1:]
+                    
+                    cursor.execute(f"DELETE FROM {cls.__name__} WHERE {pk_column} = ?", (code,))
                 
-                cursor.execute(f"DELETE FROM {cls.__name__} WHERE {pk_column} = ?", (code,))
                 conn.commit()
+                print(f"Registo {code} removido com sucesso de {cls.__name__}.")
             except sqlite3.Error as e:
                 print(f"Erro ao remover na base de dados: {e}")
             finally:
