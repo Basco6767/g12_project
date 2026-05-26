@@ -3,7 +3,7 @@ git config --global user.email "up202507000@g.uporto.pt"
 """
 Created on Thu Apr  2 17:07:46 2026
 
-@author: Sofia Teixeira
+@author: Sofia Abreu Teixeira
 """
 from gclass import Gclass
 
