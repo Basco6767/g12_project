@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G12 - Alumni Registry</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root { --old-money-green: #143424; --old-money-gold: #c5a880; --old-money-cream: #fbf9f4; --old-money-dark: #2c3531; }
+        body { font-family: 'Cormorant Garamond', serif; background-color: var(--old-money-cream); color: var(--old-money-dark); font-size: 1.15rem; }
+        h1, h2, h3, .brand-title { font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
+        .sidebar { background-color: var(--old-money-green); min-height: 100vh; padding-top: 30px; border-right: 2px solid var(--old-money-gold); }
+        .brand-section { text-align: center; margin-bottom: 40px; padding: 0 20px; }
+        .badge-crest { border: 1px solid var(--old-money-gold); color: var(--old-money-gold); padding: 8px 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; display: inline-block; margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+        .brand-title { color: var(--old-money-cream); font-size: 1.4rem; margin: 0; }
+        .nav-item { margin: 8px 15px; }
+        .nav-link { color: rgba(251, 249, 244, 0.7); padding: 12px 20px; display: block; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+        .nav-link:hover { color: var(--old-money-gold); border-bottom: 1px solid var(--old-money-gold); }
+        .nav-link.active { color: var(--old-money-green); background-color: var(--old-money-gold); font-weight: 600; }
+        .main-content { padding: 50px; }
+        .page-header { border-bottom: 1px solid rgba(197, 168, 128, 0.4); padding-bottom: 20px; margin-bottom: 40px; }
+        .page-header h1 { color: var(--old-money-green); font-size: 2.4rem; }
+        .page-header p { font-style: italic; color: #666; }
+        .card-table, .card-form { background: #ffffff; border: 1px solid var(--old-money-gold); box-shadow: 0 10px 30px rgba(20, 52, 36, 0.05); padding: 30px; margin-bottom: 40px; }
+        .section-title { color: var(--old-money-green); font-size: 1.6rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--old-money-green); padding-bottom: 10px; }
+        .table-header { background-color: var(--old-money-green); color: var(--old-money-cream); font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 1px; }
+        .table th, .table td { padding: 16px 20px; text-align: center; }
+        .table td { border-bottom: 1px solid rgba(197, 168, 128, 0.2); }
+        .grad-id { color: var(--old-money-green); font-weight: 600; font-family: 'Playfair Display', serif; }
+        .observacoes { font-style: italic; color: #555; }
+        .table-hover tbody tr:hover { background-color: rgba(197, 168, 128, 0.08); }
+        .form-control { border-radius: 0; border: 1px solid var(--old-money-gold); background-color: #fff; padding: 10px; }
+        .form-control:focus { border-color: var(--old-money-green); box-shadow: none; }
+        .btn-gold { background-color: var(--old-money-gold); color: var(--old-money-green); border: 1px solid var(--old-money-gold); border-radius: 0; font-weight: 600; }
+        .btn-gold:hover { background-color: var(--old-money-green); color: var(--old-money-cream); border-color: var(--old-money-green); }
+        .btn-green { background-color: var(--old-money-green); color: #fff; border-radius: 0; }
+        .btn-green:hover { background-color: #23543d; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-2 sidebar px-0">
+            <div class="brand-section">
+                <div class="badge-crest">G12</div>
+                <div class="brand-title">Quadro Principal</div>
+            </div>
+            <div class="nav flex-column">
+                <div class="nav-item">
+                    <a href="{{ url_for('index') }}" class="nav-link active">⚜️ Diplomados</a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('universities') }}" class="nav-link">🏛️ Universidades</a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('associations') }}" class="nav-link">🤝 Associações</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-lg-10 main-content">
+            <div class="page-header">
+                <h1>Sistema de Gestão de Alumni</h1>
+                <p>Registo Histórico de Membros e Diplomas</p>
+            </div>
+
+            <div class="card-form">
+                <div class="section-title">Registar Novo Diplomado</div>
+                <form action="{{ url_for('index') }}" method="POST">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">ID Graduado</label>
+                            <input type="number" name="graduate_id" class="form-control" required placeholder="Ex: 5001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">ID Universidade</label>
+                            <input type="number" name="university_id" class="form-control" required placeholder="Ex: 1001">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Observações Académicas</label>
+                            <input type="text" name="observations" class="form-control" required placeholder="Ex: Concluído com Distinção">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" name="action" value="save" class="btn btn-gold w-100 py-2">📜 Gravar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mb-4">
+                <form action="{{ url_for('index') }}" method="GET" class="d-flex" style="max-width: 600px;">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Pesquisar diplomados por ID ou Observações..." 
+                           value="{{ request.args.get('search', '') }}">
+                    <button type="submit" class="btn btn-green px-4">🔍 Procurar</button>
+                    {% if request.args.get('search') %}
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary ms-2" style="border-radius: 0;">Limpar</a>
+                    {% endif %}
+                </form>
+            </div>
+            
+            <div class="card-table">
+                <div class="section-title">Arquivo de Diplomados</div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-header">
+                            <tr>
+                                <th scope="col">ID DIPLOMADO</th>
+                                <th scope="col">ID UNIVERSIDADE</th>
+                                <th scope="col">OBSERVAÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for g in lista_graduados %}
+                            <tr>
+                                <td class="grad-id">#{{ g.graduate_id }}</td>
+                                <td>{{ g.university_id }}</td>
+                                <td class="observacoes">{{ g.observations }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted italic py-4">Nenhum diplomado encontrado.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
