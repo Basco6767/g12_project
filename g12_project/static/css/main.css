@@ -1,0 +1,213 @@
+/* Cores de luxo tradicional */
+:root {
+    --old-money-green: #143424; /* Verde Garrafa Profundo */
+    --old-money-gold: #c5a880;  /* Dourado Envelhecido */
+    --old-money-cream: #fbf9f4; /* Marfim / Creme */
+    --old-money-dark: #2c3531;  /* Grafite Quente */
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background-color: var(--old-money-cream);
+    color: var(--old-money-dark);
+    font-size: 1.15rem;
+}
+
+h1, h2, h3, .brand-title {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.5px;
+}
+
+/* Barra Lateral - Estilo Clube Privado */
+.sidebar {
+    background-color: var(--old-money-green);
+    min-height: 100vh;
+    padding-top: 30px;
+    border-right: 2px solid var(--old-money-gold);
+}
+
+.brand-section {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.badge-crest {
+    border: 1px solid var(--old-money-gold);
+    color: var(--old-money-gold);
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+}
+
+.brand-title {
+    color: var(--old-money-cream);
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.nav-item { margin: 8px 15px; }
+.nav-link {
+    color: rgba(251, 249, 244, 0.7);
+    font-weight: 400;
+    padding: 12px 20px;
+    border-radius: 0;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+.nav-link:hover {
+    color: var(--old-money-gold);
+    border-bottom: 1px solid var(--old-money-gold);
+}
+.nav-link.active {
+    color: var(--old-money-green);
+    background-color: var(--old-money-gold);
+    font-weight: 600;
+}
+
+/* Conteúdo Principal */
+.main-content { padding: 50px; }
+
+.page-header {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.4);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+.page-header h1 { color: var(--old-money-green); font-size: 2.4rem; }
+.page-header p { font-style: italic; color: #666; }
+
+.header-crest {
+    max-height: 70px;
+    border: 1px solid var(--old-money-gold);
+    padding: 4px;
+    background: white;
+}
+
+/* Ficha Estilo Arquivo de Herança */
+.card-table {
+    background: #ffffff;
+    border: 1px solid var(--old-money-gold);
+    box-shadow: 0 10px 30px rgba(20, 52, 36, 0.05);
+    padding: 35px;
+}
+
+.table-title {
+    color: var(--old-money-green);
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--old-money-green);
+    padding-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Customização Avançada do Formulário Interno */
+#form {
+    background-color: var(--old-money-cream);
+    border: 1px solid rgba(197, 168, 128, 0.3);
+}
+
+.form-label-custom {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: var(--old-money-green);
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid rgba(197, 168, 128, 0.5);
+    background-color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--old-money-dark);
+    transition: all 0.3s ease;
+}
+
+.form-control-custom:focus {
+    outline: none;
+    border-color: var(--old-money-green);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(20, 52, 36, 0.05);
+}
+
+/* Campos desativados/trancados (Jinja2 controls) */
+.form-control-custom:disabled,
+.form-control-custom[disabled] {
+    background-color: rgba(197, 168, 128, 0.1);
+    color: #777;
+    cursor: not-allowed;
+    font-style: italic;
+}
+
+/* Botões Customizados Estilo Arquivo Nobre */
+.button1 {
+    font-family: 'Cormorant Garamond', serif;
+    background-color: transparent;
+    color: var(--old-money-green);
+    border: 1px solid var(--old-money-green);
+    padding: 8px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 4px;
+    transition: all 0.2s ease;
+}
+
+.button1:hover:not([disabled]) {
+    color: var(--old-money-gold);
+    background-color: var(--old-money-green);
+    border-color: var(--old-money-green);
+}
+
+/* Modificadores de Botão Sólidos */
+.solid-green {
+    background-color: var(--old-money-green);
+    color: var(--old-money-cream);
+}
+.solid-green:hover:not([disabled]) {
+    background-color: var(--old-money-gold);
+    color: var(--old-money-green);
+    border-color: var(--old-money-gold);
+}
+
+.solid-muted {
+    border-color: #7d8481;
+    color: #7d8481;
+}
+.solid-muted:hover:not([disabled]) {
+    background-color: #7d8481;
+    color: #fff;
+}
+
+.solid-danger {
+    border-color: #922c2c;
+    color: #922c2c;
+}
+.solid-danger:hover:not([disabled]) {
+    background-color: #922c2c;
+    color: #fff;
+}
+
+/* Estado Desativado das Regras do Professor */
+.button1:disabled,
+.button1[disabled] {
+    background-color: #eaeaea !important;
+    color: #aaaaaa !important;
+    border-color: #dddddd !important;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Detalhes de Texto das Classes */
+.grad-id { color: var(--old-money-green); font-weight: 600; font-family: 'Playfair Display', serif; }
+.observacoes { font-style: italic; color: #555; }
