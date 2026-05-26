@@ -4,7 +4,7 @@ Created on Thu Apr  2 17:07:46 2026
 
 @author: Sofia Abreu Teixeira
 """
-from gclass import Gclass
+from classes.gclass import Gclass
 
 class University(Gclass):
     obj = dict()
