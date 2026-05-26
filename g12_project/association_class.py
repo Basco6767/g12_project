@@ -1,5 +1,3 @@
-git config --global user.name "Maria da Silva Pereira Teixeira"
-git config --global user.email "up202505257@g.uporto.pt"
 """
 Created on Thu Apr  2 17:07:56 2026
 
