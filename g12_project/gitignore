@@ -1,3 +1,4 @@
+#gitignore é utilizado para ignorar certos ficheiros ou pastas 
 # pasta a ignorar
 .spyproject
 __pycache__
