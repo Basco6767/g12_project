@@ -4,7 +4,7 @@ Created on Thu Apr  2 17:07:56 2026
 
 @author: Maria
 """
-from gclass import Gclass
+from .gclass import Gclass
 
 
 class Association(Gclass):
@@ -12,7 +12,6 @@ class Association(Gclass):
     lst = list()
     pos = 0
     sortkey = ""
-    # Ordem corrigida: bate certo com o construtor e com a BD
     att = ["_association_id", "_designation", "_objective"]
     des = ["Association ID", "Designation", "Objective"]
 

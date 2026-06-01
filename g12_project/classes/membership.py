@@ -5,7 +5,7 @@ Created on Thu Apr  2 17:08:07 2026
 @author: vasco
 """
 import sqlite3
-from gclass import Gclass
+from .gclass import Gclass
 
 
 class Membership(Gclass):

@@ -11,8 +11,8 @@ from datetime import datetime
 
 
 class Gclass:
-    # Defaults a nível de Gclass para evitar AttributeError se alguém chamar
-    # métodos directamente em Gclass.
+    # NOTA: estes atributos são apenas defaults/contrato. Cada subclasse
+    # DEVE redefinir os seus próprios obj/lst/att para não partilhar estado.
     obj = dict()
     lst = list()
     pos = 0

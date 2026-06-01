@@ -4,7 +4,7 @@ Created on Thu Apr  2 17:09:19 2026
 
 @author: Tania Tavares
 """
-from gclass import Gclass
+from .gclass import Gclass
 
 
 class Graduate(Gclass):
@@ -12,7 +12,6 @@ class Graduate(Gclass):
     lst = list()
     pos = 0
     sortkey = ''
-    # Convenção uniforme com prefixo _ como nas restantes classes
     att = ['_graduate_id', '_university_id', '_observations']
     des = ['Graduate ID', 'University ID', 'Observations']
 

@@ -3,16 +3,25 @@
 Created on Tue Apr  7 12:02:29 2026
 
 @author: vasco
-"""
 
-from university_class import University
-from graduate_class import Graduate
-from association_class import Association
-from membership_class import Membership
+Programa de teste das classes (ponto 7).
+"""
+import os
+
+from classes.university import University
+from classes.graduate import Graduate
+from classes.association import Association
+from classes.membership import Membership
+
+
+# Caminho da BD resolvido a partir da localização deste ficheiro,
+# independentemente do diretório a partir do qual o programa é executado.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "data", "universidades_alumni.db")
 
 
 def main():
-    db = "universidades_alumni.db"
+    db = DB_PATH
 
     print("--- 1. Lendo Base de Dados ---")
     try:
@@ -33,7 +42,7 @@ def main():
         print("\n--- 2. Lista de Associações ---")
         print("Aviso: A lista de Membership está vazia. Não há nada para navegar.")
     else:
-        print("\n--- 2. Lista de Associações (Navegação) ---")
+        print("\n--- 2. Lista de Memberships (Navegação) ---")
         m = Membership.first()
         count = 0
         while m and count < 5:
@@ -57,6 +66,13 @@ def main():
         print(f"Universidade mais recente: {u.uni_name} ({u.foundation_date})")
     else:
         print("Aviso: Nenhuma universidade carregada para ordenar.")
+
+    print("\n--- 4. Teste de Pesquisa (find) ---")
+    if len(Graduate.lst) > 0:
+        primeiro = Graduate.first()
+        encontrados = Graduate.find(primeiro.university_id, "university_id")
+        print(f"Graduados da universidade {primeiro.university_id}: "
+              f"{len(encontrados)} encontrado(s).")
 
 
 if __name__ == "__main__":
