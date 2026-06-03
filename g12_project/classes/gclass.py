@@ -45,6 +45,36 @@ class Gclass:
             if conn is not None:
                 conn.close()
 
+    def write(self):
+        """
+        Persiste o objeto na base de dados (INSERT OR REPLACE).
+        Usa os nomes das colunas derivados de cls.att (sem o prefixo '_').
+        Funciona tanto para PK simples como composta.
+        """
+        cls = self.__class__
+        columns = [a[1:] if a.startswith('_') else a for a in cls.att]
+        values = [getattr(self, a) for a in cls.att]
+        placeholders = ", ".join(["?"] * len(values))
+        col_list = ", ".join(columns)
+
+        conn = None
+        try:
+            conn = sqlite3.connect(cls.db_name)
+            cursor = conn.cursor()
+            cursor.execute(
+                f"INSERT OR REPLACE INTO {cls.__name__} ({col_list}) "
+                f"VALUES ({placeholders})",
+                values
+            )
+            conn.commit()
+            return True
+        except sqlite3.Error as e:
+            print(f"Erro ao gravar na base de dados: {e}")
+            return False
+        finally:
+            if conn is not None:
+                conn.close()
+
     @classmethod
     def remove(cls, code):
         """
