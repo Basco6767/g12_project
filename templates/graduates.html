@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Graduados · G12{% endblock %}
+{% block content %}
+<h1>Graduados</h1>
+
+<form class="search" method="get" action="{{ url_for('graduates') }}">
+    <input type="text" name="search" placeholder="Pesquisar…" value="{{ termo }}">
+    <button type="submit">Pesquisar</button>
+</form>
+
+<p class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</p>
+{% if lista %}
+<table>
+    <thead><tr><th>ID Graduado</th><th>ID Universidade</th><th>Observações</th></tr></thead>
+    <tbody>
+    {% for g in lista %}
+        <tr>
+            <td>{{ g.graduate_id }}</td>
+            <td>{{ g.university_id }}</td>
+            <td>{{ g.observations or "—" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Sem graduados para mostrar.</p>
+{% endif %}
+{% endblock %}
