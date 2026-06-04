@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Análise · G12{% endblock %}
+{% block content %}
+<h1>Análise das inscrições</h1>
+<p>Análise dos dados com Pandas e visualização com Matplotlib, centrada na
+   evolução das inscrições em associações ao longo do tempo.</p>
+
+<h2>Evolução mensal</h2>
+<img class="chart" src="data:image/png;base64,{{ img_mes }}" alt="Inscrições ao longo do tempo">
+
+<h2>Inscrições por ano</h2>
+<img class="chart" src="data:image/png;base64,{{ img_ano }}" alt="Inscrições por ano">
+
+<h2>Receita e fee médio por ano</h2>
+<img class="chart" src="data:image/png;base64,{{ img_receita }}" alt="Receita por ano">
+
+<table>
+    <thead><tr><th>Ano</th><th>Receita total</th><th>Fee médio</th><th>Nº inscrições</th></tr></thead>
+    <tbody>
+    {% for linha in tabela %}
+        <tr>
+            <td>{{ linha.ano }}</td>
+            <td>{{ linha.sum }}</td>
+            <td>{{ linha.mean }}</td>
+            <td>{{ linha.count }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

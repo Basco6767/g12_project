@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Painel · G12{% endblock %}
+{% block content %}
+<h1>Universidades &amp; Alumni</h1>
+<p>Plataforma de gestão e análise das associações académicas, universidades e graduados do projeto do Grupo G12.</p>
+
+<div class="kpi-grid">
+    <div class="kpi"><div class="val">{{ kpis.total_universidades }}</div><div class="lab">Universidades</div></div>
+    <div class="kpi"><div class="val">{{ kpis.total_associacoes }}</div><div class="lab">Associações</div></div>
+    <div class="kpi"><div class="val">{{ kpis.total_graduados }}</div><div class="lab">Graduados</div></div>
+    <div class="kpi"><div class="val">{{ kpis.total_memberships }}</div><div class="lab">Inscrições</div></div>
+    <div class="kpi"><div class="val">{{ kpis.receita_total }}</div><div class="lab">Receita total</div></div>
+    <div class="kpi"><div class="val">{{ kpis.fee_medio }}</div><div class="lab">Fee médio</div></div>
+    <div class="kpi"><div class="val">{{ kpis.ano_pico }}</div><div class="lab">Ano de pico ({{ kpis.inscricoes_pico }})</div></div>
+</div>
+
+<p>Período de dados: <strong>{{ kpis.primeira_data }}</strong> a <strong>{{ kpis.ultima_data }}</strong>.</p>
+{% endblock %}

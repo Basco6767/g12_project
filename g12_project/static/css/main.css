@@ -1,0 +1,71 @@
+/* CSS mínimo funcional — o design elaborado fica para o passo 5 (interface). */
+* { box-sizing: border-box; }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #222;
+    background: #fafafa;
+    line-height: 1.5;
+}
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: #2b6777;
+    color: #fff;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.brand { font-weight: bold; font-size: 18px; }
+.nav a {
+    color: #cfe3e8;
+    text-decoration: none;
+    margin-left: 14px;
+}
+.nav a.on, .nav a:hover { color: #fff; text-decoration: underline; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 24px; }
+.foot { text-align: center; padding: 18px; color: #888; font-size: 13px; }
+
+h1 { margin-top: 0; }
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+.kpi {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+}
+.kpi .val { font-size: 26px; font-weight: bold; color: #2b6777; }
+.kpi .lab { font-size: 13px; color: #666; margin-top: 4px; }
+
+.search { margin: 16px 0; }
+.search input { padding: 8px; width: 280px; max-width: 100%; }
+.search button, .addbox button { padding: 8px 14px; cursor: pointer; }
+
+.addbox {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+.addbox input { padding: 6px; margin: 4px; }
+
+.count { color: #666; font-size: 14px; }
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ddd; }
+th { background: #f0f0f0; }
+
+.chart { max-width: 100%; height: auto; display: block; margin: 10px 0 24px; }
+
+.flashes { margin: 16px 0; }
+.flash { padding: 10px 14px; border-radius: 6px; margin-bottom: 8px; }
+.flash-ok { background: #e3efe6; color: #2f6a45; }
+.flash-erro { background: #f5e2df; color: #9c3b2e; }
