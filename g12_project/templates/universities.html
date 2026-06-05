@@ -1,40 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Universidades · G12{% endblock %}
 {% block content %}
-<h1>Universidades</h1>
+<div class="page-head">
+    <h1>Universidades</h1>
+    <p>Consulta, pesquisa, adiciona e remove universidades. As alterações são
+       gravadas na base de dados.</p>
+</div>
 
-<form class="search" method="get" action="{{ url_for('universities') }}">
-    <input type="text" name="search" placeholder="Pesquisar por nome ou ID…" value="{{ termo }}">
-    <button type="submit">Pesquisar</button>
-</form>
+<div class="toolbar">
+    <form class="search" method="get" action="{{ url_for('universities') }}">
+        <input type="text" name="search" placeholder="Pesquisar por nome ou ID…" value="{{ termo }}">
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
+    </form>
+    <button class="btn btn-ghost" type="button" onclick="document.getElementById('addform').classList.toggle('open')">+ Adicionar</button>
+</div>
 
-<div class="addbox">
-    <h2>Adicionar universidade</h2>
+<div id="addform" class="panel collapsible">
+    <h2>Nova universidade</h2>
     <form method="post" action="{{ url_for('add_university') }}">
-        ID: <input type="number" name="uni_id" required>
-        Nome: <input type="text" name="uni_name" required>
-        Fundação: <input type="text" name="foundation_date" placeholder="dd/mm/aaaa" required>
-        <button type="submit">Guardar</button>
+        <div class="form-row">
+            <div class="field"><label>ID</label><input type="number" name="uni_id" required></div>
+            <div class="field"><label>Nome</label><input type="text" name="uni_name" required></div>
+            <div class="field"><label>Data de fundação</label><input type="text" name="foundation_date" placeholder="dd/mm/aaaa" required></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Guardar</button>
     </form>
 </div>
 
-<p class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</p>
-{% if lista %}
-<table>
-    <thead><tr><th>ID</th><th>Nome</th><th>Fundação</th><th></th></tr></thead>
-    <tbody>
-    {% for u in lista %}
-        <tr>
-            <td>{{ u.uni_id }}</td>
-            <td>{{ u.uni_name }}</td>
-            <td>{{ u.foundation_date }}</td>
-            <td><a href="{{ url_for('delete_university', uni_id=u.uni_id) }}"
-                   onclick="return confirm('Remover a universidade {{ u.uni_id }}?')">Remover</a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% else %}
-    <p>Sem universidades para mostrar.</p>
-{% endif %}
+<div class="panel">
+    <div class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</div>
+    {% if lista %}
+    <table>
+        <thead><tr><th>ID</th><th>Nome</th><th>Fundação</th><th></th></tr></thead>
+        <tbody>
+        {% for u in lista %}
+            <tr>
+                <td class="id-cell">{{ u.uni_id }}</td>
+                <td>{{ u.uni_name }}</td>
+                <td>{{ u.foundation_date }}</td>
+                <td><a class="btn btn-danger" href="{{ url_for('delete_university', uni_id=u.uni_id) }}"
+                       onclick="return confirm('Remover a universidade {{ u.uni_id }}?')">Remover</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="empty">Sem universidades para mostrar.</div>
+    {% endif %}
+</div>
 {% endblock %}

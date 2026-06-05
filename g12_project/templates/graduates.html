@@ -1,28 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Graduados · G12{% endblock %}
 {% block content %}
-<h1>Graduados</h1>
+<div class="page-head">
+    <h1>Graduados</h1>
+    <p>Lista de graduados e respetivas universidades. Pesquisa por ID, universidade ou observações.</p>
+</div>
 
-<form class="search" method="get" action="{{ url_for('graduates') }}">
-    <input type="text" name="search" placeholder="Pesquisar…" value="{{ termo }}">
-    <button type="submit">Pesquisar</button>
-</form>
+<div class="toolbar">
+    <form class="search" method="get" action="{{ url_for('graduates') }}">
+        <input type="text" name="search" placeholder="Pesquisar…" value="{{ termo }}">
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
+    </form>
+</div>
 
-<p class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</p>
-{% if lista %}
-<table>
-    <thead><tr><th>ID Graduado</th><th>ID Universidade</th><th>Observações</th></tr></thead>
-    <tbody>
-    {% for g in lista %}
-        <tr>
-            <td>{{ g.graduate_id }}</td>
-            <td>{{ g.university_id }}</td>
-            <td>{{ g.observations or "—" }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% else %}
-    <p>Sem graduados para mostrar.</p>
-{% endif %}
+<div class="panel">
+    <div class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</div>
+    {% if lista %}
+    <table>
+        <thead><tr><th>ID Graduado</th><th>ID Universidade</th><th>Observações</th></tr></thead>
+        <tbody>
+        {% for g in lista %}
+            <tr>
+                <td class="id-cell">{{ g.graduate_id }}</td>
+                <td>{{ g.university_id }}</td>
+                <td>{{ g.observations or "—" }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="empty">Sem graduados para mostrar.</div>
+    {% endif %}
+</div>
 {% endblock %}

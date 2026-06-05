@@ -1,40 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Associações · G12{% endblock %}
 {% block content %}
-<h1>Associações</h1>
+<div class="page-head">
+    <h1>Associações</h1>
+    <p>Consulta, pesquisa, adiciona e remove associações académicas.</p>
+</div>
 
-<form class="search" method="get" action="{{ url_for('associations') }}">
-    <input type="text" name="search" placeholder="Pesquisar por designação ou objetivo…" value="{{ termo }}">
-    <button type="submit">Pesquisar</button>
-</form>
+<div class="toolbar">
+    <form class="search" method="get" action="{{ url_for('associations') }}">
+        <input type="text" name="search" placeholder="Pesquisar por designação ou objetivo…" value="{{ termo }}">
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
+    </form>
+    <button class="btn btn-ghost" type="button" onclick="document.getElementById('addform').classList.toggle('open')">+ Adicionar</button>
+</div>
 
-<div class="addbox">
-    <h2>Adicionar associação</h2>
+<div id="addform" class="panel collapsible">
+    <h2>Nova associação</h2>
     <form method="post" action="{{ url_for('add_association') }}">
-        ID: <input type="number" name="association_id" required>
-        Designação: <input type="text" name="designation" required>
-        Objetivo: <input type="text" name="objective" required>
-        <button type="submit">Guardar</button>
+        <div class="form-row">
+            <div class="field"><label>ID</label><input type="number" name="association_id" required></div>
+            <div class="field"><label>Designação</label><input type="text" name="designation" required></div>
+            <div class="field"><label>Objetivo</label><input type="text" name="objective" required></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Guardar</button>
     </form>
 </div>
 
-<p class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</p>
-{% if lista %}
-<table>
-    <thead><tr><th>ID</th><th>Designação</th><th>Objetivo</th><th></th></tr></thead>
-    <tbody>
-    {% for a in lista %}
-        <tr>
-            <td>{{ a.association_id }}</td>
-            <td>{{ a.designation }}</td>
-            <td>{{ a.objective }}</td>
-            <td><a href="{{ url_for('delete_association', a_id=a.association_id) }}"
-                   onclick="return confirm('Remover a associação {{ a.association_id }}?')">Remover</a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% else %}
-    <p>Sem associações para mostrar.</p>
-{% endif %}
+<div class="panel">
+    <div class="count">{{ lista|length }} resultado(s){% if termo %} para "{{ termo }}"{% endif %}</div>
+    {% if lista %}
+    <table>
+        <thead><tr><th>ID</th><th>Designação</th><th>Objetivo</th><th></th></tr></thead>
+        <tbody>
+        {% for a in lista %}
+            <tr>
+                <td class="id-cell">{{ a.association_id }}</td>
+                <td>{{ a.designation }}</td>
+                <td>{{ a.objective }}</td>
+                <td><a class="btn btn-danger" href="{{ url_for('delete_association', a_id=a.association_id) }}"
+                       onclick="return confirm('Remover a associação {{ a.association_id }}?')">Remover</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="empty">Sem associações para mostrar.</div>
+    {% endif %}
+</div>
 {% endblock %}

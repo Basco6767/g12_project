@@ -1,30 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Análise · G12{% endblock %}
 {% block content %}
-<h1>Análise das inscrições</h1>
-<p>Análise dos dados com Pandas e visualização com Matplotlib, centrada na
-   evolução das inscrições em associações ao longo do tempo.</p>
+<div class="page-head">
+    <h1>Análise das <span class="accent">inscrições</span></h1>
+    <p>Análise dos dados com Pandas e visualização com Matplotlib, centrada na
+       evolução das inscrições em associações ao longo do tempo.</p>
+</div>
 
-<h2>Evolução mensal</h2>
-<img class="chart" src="data:image/png;base64,{{ img_mes }}" alt="Inscrições ao longo do tempo">
+<div class="kpi-grid">
+    <div class="kpi gold"><div class="val">{{ kpis.inscricoes_pico }}</div><div class="lab">Pico anual ({{ kpis.ano_pico }})</div></div>
+    <div class="kpi"><div class="val">{{ kpis.total_memberships }}</div><div class="lab">Total de inscrições</div></div>
+    <div class="kpi"><div class="val">{{ kpis.fee_medio }}</div><div class="lab">Fee médio</div></div>
+</div>
 
-<h2>Inscrições por ano</h2>
-<img class="chart" src="data:image/png;base64,{{ img_ano }}" alt="Inscrições por ano">
+<div class="panel">
+    <h2>Evolução mensal</h2>
+    <img class="chart" src="data:image/png;base64,{{ img_mes }}" alt="Inscrições ao longo do tempo">
+    <p class="chart-note">Número de inscrições por mês, de {{ kpis.primeira_data }} a {{ kpis.ultima_data }}.
+       Nota-se uma tendência geral de crescimento, com a quebra final de 2026 a refletir um período ainda incompleto nos dados.</p>
+</div>
 
-<h2>Receita e fee médio por ano</h2>
-<img class="chart" src="data:image/png;base64,{{ img_receita }}" alt="Receita por ano">
+<div class="panel">
+    <h2>Inscrições por ano</h2>
+    <img class="chart" src="data:image/png;base64,{{ img_ano }}" alt="Inscrições por ano">
+    <p class="chart-note">O ano de {{ kpis.ano_pico }} concentra o maior número de inscrições (destacado a dourado).</p>
+</div>
 
-<table>
-    <thead><tr><th>Ano</th><th>Receita total</th><th>Fee médio</th><th>Nº inscrições</th></tr></thead>
-    <tbody>
-    {% for linha in tabela %}
-        <tr>
-            <td>{{ linha.ano }}</td>
-            <td>{{ linha.sum }}</td>
-            <td>{{ linha.mean }}</td>
-            <td>{{ linha.count }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="panel">
+    <h2>Receita e fee médio por ano</h2>
+    <img class="chart" src="data:image/png;base64,{{ img_receita }}" alt="Receita por ano">
+    <table style="margin-top:18px">
+        <thead><tr><th>Ano</th><th>Receita total</th><th>Fee médio</th><th>Nº inscrições</th></tr></thead>
+        <tbody>
+        {% for linha in tabela %}
+            <tr>
+                <td class="id-cell">{{ linha.ano }}</td>
+                <td>{{ "{:,.0f}".format(linha.sum).replace(",", " ") }}</td>
+                <td>{{ linha.mean }}</td>
+                <td>{{ linha.count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

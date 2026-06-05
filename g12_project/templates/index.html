@@ -1,18 +1,37 @@
 {% extends "base.html" %}
 {% block title %}Painel · G12{% endblock %}
 {% block content %}
-<h1>Universidades &amp; Alumni</h1>
-<p>Plataforma de gestão e análise das associações académicas, universidades e graduados do projeto do Grupo G12.</p>
+<div class="page-head">
+    <h1>Universidades &amp; <span class="accent">Alumni</span></h1>
+    <p>Plataforma de gestão e análise das associações académicas, universidades
+       e graduados do projeto do Grupo G12.</p>
+</div>
 
 <div class="kpi-grid">
     <div class="kpi"><div class="val">{{ kpis.total_universidades }}</div><div class="lab">Universidades</div></div>
     <div class="kpi"><div class="val">{{ kpis.total_associacoes }}</div><div class="lab">Associações</div></div>
     <div class="kpi"><div class="val">{{ kpis.total_graduados }}</div><div class="lab">Graduados</div></div>
-    <div class="kpi"><div class="val">{{ kpis.total_memberships }}</div><div class="lab">Inscrições</div></div>
-    <div class="kpi"><div class="val">{{ kpis.receita_total }}</div><div class="lab">Receita total</div></div>
+    <div class="kpi gold"><div class="val">{{ kpis.total_memberships }}</div><div class="lab">Inscrições</div></div>
+</div>
+
+<div class="kpi-grid">
+    <div class="kpi gold"><div class="val">{{ "{:,.0f}".format(kpis.receita_total).replace(",", " ") }}</div><div class="lab">Receita total (fees)</div></div>
     <div class="kpi"><div class="val">{{ kpis.fee_medio }}</div><div class="lab">Fee médio</div></div>
     <div class="kpi"><div class="val">{{ kpis.ano_pico }}</div><div class="lab">Ano de pico ({{ kpis.inscricoes_pico }})</div></div>
 </div>
 
-<p>Período de dados: <strong>{{ kpis.primeira_data }}</strong> a <strong>{{ kpis.ultima_data }}</strong>.</p>
+<div class="panel">
+    <h2>O que podes fazer aqui</h2>
+    <p style="color:var(--muted)">
+        Consulta e pesquisa as <a href="{{ url_for('universities') }}">universidades</a>,
+        <a href="{{ url_for('associations') }}">associações</a> e
+        <a href="{{ url_for('graduates') }}">graduados</a>, adiciona ou remove registos
+        (gravados diretamente na base de dados SQLite), e explora a
+        <a href="{{ url_for('analysis') }}">análise das inscrições ao longo do tempo</a>,
+        feita com Pandas e ilustrada com Matplotlib.
+    </p>
+    <p style="margin-top:14px;color:var(--muted)">
+        Período de dados: <strong>{{ kpis.primeira_data }}</strong> a <strong>{{ kpis.ultima_data }}</strong>.
+    </p>
+</div>
 {% endblock %}
