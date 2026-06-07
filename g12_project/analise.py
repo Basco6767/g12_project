@@ -24,9 +24,9 @@ def load_memberships():
     """Lê a tabela Membership para um DataFrame, com a data já convertida."""
     with _connect() as conn:
         df = pd.read_sql("SELECT * FROM Membership", conn)
-    # Formatos de data mistos (d/m/yyyy e dd/mm/yyyy) -> datetime
+    # As datas estão guardadas em formato ISO (aaaa-mm-dd) na base de dados
     df["registration_date"] = pd.to_datetime(
-        df["registration_date"], format="mixed", dayfirst=True, errors="coerce"
+        df["registration_date"], format="ISO8601", errors="coerce"
     )
     return df
 

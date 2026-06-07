@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-app.py — Aplicação Flask do Grupo G12 (Fase 2, passo 4).
 
-Mantém a informação da base de dados (CRUD sobre Universidades, Associações
-e Graduados) e disponibiliza um painel de análise de dados com Pandas +
-Matplotlib (inscrições ao longo do tempo).
-
-Correr com:  python app.py   (e abrir http://127.0.0.1:5000)
-"""
 import os
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -73,7 +65,7 @@ def add_university():
             flash(f"Já existe uma universidade com o ID {uni_id}.", "erro")
         else:
             u = University(uni_id, nome, data)
-            u.write()
+            University.insert(u.uni_id)
             flash(f"Universidade '{nome}' adicionada com sucesso.", "ok")
     except (ValueError, KeyError):
         flash("Dados inválidos no formulário.", "erro")
@@ -82,7 +74,8 @@ def add_university():
 
 @app.route("/universities/delete/<int:uni_id>")
 def delete_university(uni_id):
-    if University.remove(uni_id):
+    if uni_id in University.obj:
+        University.remove(uni_id)
         flash(f"Universidade {uni_id} removida.", "ok")
     else:
         flash(f"Não foi possível remover a universidade {uni_id}.", "erro")
@@ -115,7 +108,7 @@ def add_association():
             flash(f"Já existe uma associação com o ID {a_id}.", "erro")
         else:
             a = Association(a_id, desig, obj)
-            a.write()
+            Association.insert(a.association_id)
             flash(f"Associação '{desig}' adicionada.", "ok")
     except (ValueError, KeyError):
         flash("Dados inválidos no formulário.", "erro")
@@ -124,7 +117,8 @@ def add_association():
 
 @app.route("/associations/delete/<int:a_id>")
 def delete_association(a_id):
-    if Association.remove(a_id):
+    if a_id in Association.obj:
+        Association.remove(a_id)
         flash(f"Associação {a_id} removida.", "ok")
     else:
         flash(f"Não foi possível remover a associação {a_id}.", "erro")
@@ -170,4 +164,4 @@ def analysis():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

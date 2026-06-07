@@ -48,7 +48,7 @@ def main():
         while m and count < 5:
             print(f"Registo {count+1}: Uni ID: {m.university_id} | "
                   f"Assoc ID: {m.association_id}")
-            m = Membership.next()
+            m = Membership.nextrec()
             count += 1
 
     print("\n--- 3. Teste de Ordenação ---")
@@ -59,7 +59,7 @@ def main():
         print(f"Primeira universidade (A-Z): {u.uni_name}")
 
         # Ordenar por data de fundação (cronológico, não alfabético)
-        University.sort("foundation_date", as_date=True)
+        University.sort("foundation_date")
         u = University.first()
         print(f"Universidade mais antiga: {u.uni_name} ({u.foundation_date})")
         u = University.last()

@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr  2 17:08:07 2026
-
 @author: vasco
+class Membership - derivada de Gclass (padrão lição 5).
+
+Caso especial: a tabela Membership tem CHAVE PRIMÁRIA COMPOSTA
+(university_id, association_id), que a Gclass genérica não cobre.
+Por isso esta classe:
+ - usa um identificador interno '_code' = "uni_assoc" como att[0]
+   (para as estruturas obj/lst/navegação da Gclass funcionarem);
+ - faz override de insert/update/remove para usarem a chave composta real
+   na base de dados.
 """
-import sqlite3
+import datetime
 from .gclass import Gclass
 
 
@@ -13,22 +20,24 @@ class Membership(Gclass):
     lst = list()
     pos = 0
     sortkey = ''
-
-    att = ['_university_id', '_association_id', '_registration_date', '_fee']
-    des = ['University ID', 'Association ID', 'Registration Date', 'Fee']
+    att = ['_code', '_university_id', '_association_id',
+           '_registration_date', '_fee']
+    header = 'Memberships'
+    des = ['Code', 'University ID', 'Association ID', 'Registration Date', 'Fee']
 
     def __init__(self, university_id, association_id, registration_date, fee):
         super().__init__()
-        self._university_id = university_id
-        self._association_id = association_id
-        self._registration_date = registration_date
-        self._fee = fee
+        self._university_id = int(university_id)
+        self._association_id = int(association_id)
+        self._registration_date = datetime.date.fromisoformat(registration_date)
+        self._fee = float(fee)
+        self._code = f"{self._university_id}_{self._association_id}"
+        Membership.obj[self._code] = self
+        Membership.lst.append(self._code)
 
-        code = f"{self._university_id}_{self._association_id}"
-
-        if code not in Membership.obj:
-            Membership.obj[code] = self
-            Membership.lst.append(code)
+    @property
+    def code(self):
+        return self._code
 
     @property
     def university_id(self):
@@ -46,46 +55,37 @@ class Membership(Gclass):
     def fee(self):
         return self._fee
 
+    # --- Overrides para chave composta (a tabela não tem coluna 'code') ---
     @classmethod
-    def remove(cls, code):
-        """
-        Override do remove para suportar chave composta
-        (university_id, association_id). O código tem o formato '{uni}_{assoc}'.
-        """
-        if code not in cls.obj:
-            return False
+    def insert(cls, p):
+        obj = cls.obj[p]
+        command = (
+            f'INSERT INTO {cls.__name__} '
+            f'(university_id, association_id, registration_date, fee) VALUES('
+            f'{obj._university_id},{obj._association_id},'
+            f'"{obj._registration_date}",{obj._fee})'
+        )
+        cls.sqlexe(command)
 
-        del cls.obj[code]
-        cls.lst.remove(code)
+    @classmethod
+    def update(cls, p):
+        obj = cls.obj[p]
+        command = (
+            f'UPDATE "{cls.__name__}" SET '
+            f'registration_date = "{obj._registration_date}", fee = {obj._fee} '
+            f'WHERE university_id = {obj._university_id} '
+            f'AND association_id = {obj._association_id}'
+        )
+        cls.sqlexe(command)
 
-        try:
-            uni_id_str, assoc_id_str = code.split('_', 1)
-            uni_id = int(uni_id_str)
-            assoc_id = int(assoc_id_str)
-        except (ValueError, AttributeError) as e:
-            print(f"Erro a interpretar a chave '{code}': {e}")
-            return False
-
-        conn = None
-        try:
-            conn = sqlite3.connect(cls.db_name)
-            cursor = conn.cursor()
-            cursor.execute(
-                "DELETE FROM Membership "
-                "WHERE university_id = ? AND association_id = ?",
-                (uni_id, assoc_id)
-            )
-            conn.commit()
-            return True
-        except sqlite3.Error as e:
-            print(f"Erro ao remover Membership na base de dados: {e}")
-            return False
-        finally:
-            if conn is not None:
-                conn.close()
-
-    def __str__(self):
-        return (f"Membership(Uni: {self._university_id}, "
-                f"Assoc: {self._association_id}, "
-                f"Date: {self._registration_date}, "
-                f"Fee: {self._fee})")
+    @classmethod
+    def remove(cls, p):
+        obj = cls.obj[p]
+        command = (
+            f'DELETE FROM {cls.__name__} '
+            f'WHERE university_id = {obj._university_id} '
+            f'AND association_id = {obj._association_id}'
+        )
+        cls.sqlexe(command)
+        cls.lst.remove(p)
+        del cls.obj[p]
