@@ -31,7 +31,7 @@ Depois disso, pode-se correr o `app.py` e abrir http://127.0.0.1:5000 no browser
 ## Funcionalidades
 
 1. Flask CRUD — listar, pesquisar, adicionar e remover universidades e
-   associações e listar e pesquisar graduados (gravado em SQLite).
+   associações; listar e pesquisar graduados (gravado em SQLite).
 2. Análise (Pandas) — inscrições por mês/ano, receita e fee médio por ano.
-3. Gráficos (Matplotlib) — barras por ano, receita/fee médio.
-4. Interface — painel de KPIs, pesquisa, mensagens de feedback.
+3. Gráficos (Matplotlib) — série temporal, barras por ano, receita/fee médio.
+4. Interface — painel de KPIs, pesquisa, mensagens de feedback, responsivo.

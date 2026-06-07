@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Parcerias · G12{% endblock %}
+{% block content %}
+<div class="page-head">
+    <h1>Parcerias</h1>
+    <p>Parcerias de universidades com associações académicas. Cada parceria liga
+       uma universidade a uma associação, com a data de registo e o valor da quota (fee).</p>
+</div>
+
+<div class="toolbar">
+    <form class="search" method="get" action="{{ url_for('memberships') }}">
+        <input type="text" name="search" placeholder="Pesquisar por universidade ou associação…" value="{{ termo }}">
+        <button class="btn btn-primary" type="submit">Pesquisar</button>
+    </form>
+</div>
+
+<div class="panel">
+    <div class="count">
+        {% if termo %}
+            {{ total }} resultado(s) para "{{ termo }}"
+        {% else %}
+            {{ total }} parceria(s)
+        {% endif %}
+    </div>
+    {% if lista %}
+    <table>
+        <thead>
+            <tr>
+                <th>Universidade</th>
+                <th>Associação</th>
+                <th>Data de registo</th>
+                <th>Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in lista %}
+            <tr>
+                <td><span class="id-cell">{{ r.university_id }}</span> · {{ r.university_name }}</td>
+                <td><span class="id-cell">{{ r.association_id }}</span> · {{ r.association_name }}</td>
+                <td>{{ r.registration_date }}</td>
+                <td>{{ r.fee }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="empty">Sem inscrições para mostrar.</div>
+    {% endif %}
+</div>
+{% endblock %}

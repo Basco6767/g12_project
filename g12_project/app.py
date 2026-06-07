@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
+"""
+app.py — Aplicação Flask do Grupo G12 (Fase 2).
 
+Mantém a informação da base de dados (CRUD sobre Universidades e Associações,
+consulta de Graduados e Parcerias) e disponibiliza um painel de análise de
+dados com Pandas + Matplotlib.
+
+Correr com:  python app.py   (e abrir http://127.0.0.1:5000)
+"""
 import os
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -139,6 +147,41 @@ def graduates():
                  or termo in str(g.university_id).lower()]
     return render_template("graduates.html", lista=lista,
                            termo=termo, ativo="graduates")
+
+
+# ---------------------------------------------------------------------------
+# Memberships — inscrições (universidade + associação), listagem e pesquisa
+# ---------------------------------------------------------------------------
+@app.route("/memberships")
+def memberships():
+    termo = request.args.get("search", "").strip().lower()
+
+    # Construir linhas enriquecidas com o nome da universidade e a designação
+    # da associação (os IDs sozinhos seriam pouco legíveis).
+    linhas = []
+    for code in Membership.lst:
+        m = Membership.obj[code]
+        uni = University.obj.get(m.university_id)
+        assoc = Association.obj.get(m.association_id)
+        linhas.append({
+            "university_id": m.university_id,
+            "university_name": uni.uni_name if uni else "—",
+            "association_id": m.association_id,
+            "association_name": assoc.designation if assoc else "—",
+            "registration_date": m.registration_date,
+            "fee": m.fee,
+        })
+
+    if termo:
+        linhas = [r for r in linhas
+                  if termo in str(r["university_id"]).lower()
+                  or termo in str(r["university_name"]).lower()
+                  or termo in str(r["association_id"]).lower()
+                  or termo in str(r["association_name"]).lower()]
+
+    total = len(linhas)
+    return render_template("memberships.html", lista=linhas, termo=termo,
+                           total=total, ativo="memberships")
 
 
 # ---------------------------------------------------------------------------
