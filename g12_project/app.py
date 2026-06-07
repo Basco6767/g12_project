@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-app.py — Aplicação Flask do Grupo G12 (Fase 2).
+app.py — Aplicação Flask do Grupo G12 (Fase 2, passo 4).
 
-Mantém a informação da base de dados (CRUD sobre Universidades e Associações,
-consulta de Graduados e Parcerias) e disponibiliza um painel de análise de
-dados com Pandas + Matplotlib.
+Mantém a informação da base de dados (CRUD sobre Universidades, Associações
+e Graduados) e disponibiliza um painel de análise de dados com Pandas +
+Matplotlib (inscrições ao longo do tempo).
 
 Correr com:  python app.py   (e abrir http://127.0.0.1:5000)
 """
 import os
+from functools import wraps
 
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import (Flask, render_template, request, redirect, url_for, flash,
+                   session)
 
 from classes.university import University
 from classes.graduate import Graduate
 from classes.association import Association
 from classes.membership import Membership
+from classes.userlogin import Userlogin
 
 import analise
 import graficos
@@ -26,6 +29,8 @@ DB_PATH = os.path.join(BASE_DIR, "data", "universidades_alumni.db")
 app = Flask(__name__)
 app.secret_key = "g12-alumni-secret"
 
+prev_option = ""
+
 
 def carregar_dados():
     """(Re)carrega todas as classes a partir da BD para memória."""
@@ -33,9 +38,131 @@ def carregar_dados():
     Graduate.read(DB_PATH)
     Association.read(DB_PATH)
     Membership.read(DB_PATH)
+    Userlogin.read(DB_PATH)
 
 
 carregar_dados()
+
+
+def login_required(f):
+    """Decorator que protege uma rota: exige sessão iniciada."""
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if session.get("user") is None:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return wrapper
+
+
+# ---------------------------------------------------------------------------
+# Login / Logoff / Validação (abordagem da lição 10 — classe Userlogin)
+# ---------------------------------------------------------------------------
+@app.route("/login")
+def login():
+    return render_template("login.html", id=0, user="", password="",
+                           ulogin=session.get("user"), resul="")
+
+
+@app.route("/logoff")
+def logoff():
+    session.pop("user", None)
+    return redirect(url_for("login"))
+
+
+@app.route("/chklogin", methods=["post", "get"])
+def chklogin():
+    user = request.form["user"]
+    password = request.form["password"]
+    resul = Userlogin.chk_password(user, password)
+    if resul == "Valid":
+        session["user"] = user
+        return redirect(url_for("index"))
+    return render_template("login.html", user=user, password=password,
+                           ulogin=session.get("user"), resul=resul)
+
+
+# ---------------------------------------------------------------------------
+# Manutenção de utilizadores (apenas grupo 'admin') — baseado na lição
+# ---------------------------------------------------------------------------
+@app.route("/Userlogin", methods=["post", "get"])
+@login_required
+def userlogin():
+    global prev_option
+    msg = ""
+    ulogin = session.get("user")
+    user_id = Userlogin.get_user_id(ulogin)
+    group = Userlogin.obj[user_id].usergroup
+    if group != "admin":
+        butshow = "enabled"
+        butedit = "disabled"
+    option = request.args.get("option")
+    if option == "edit":
+        butshow = "disabled"
+        butedit = "enabled"
+    elif option == "delete":
+        obj = Userlogin.current(Userlogin.lst[Userlogin.pos])
+        if obj.id != user_id:
+            Userlogin.remove(obj.id)
+            if not Userlogin.previous():
+                Userlogin.first()
+        else:
+            msg = "You cannot delete the same user"
+        butshow = "enabled"
+        butedit = "disabled"
+    elif option == "insert":
+        butshow = "disabled"
+        butedit = "enabled"
+    elif option == "cancel":
+        pass
+    elif prev_option == "insert" and option == "save":
+        user = request.form["user"]
+        if len(Userlogin.find(user, "user")) == 0:
+            usergroup = request.form["usergroup"]
+            password = request.form["password"]
+            obj = Userlogin(0, user, usergroup, Userlogin.set_password(password))
+            Userlogin.insert(obj.id)
+        else:
+            msg = "duplicate username"
+        Userlogin.last()
+    elif prev_option == "edit" and option == "save":
+        obj = Userlogin.current(Userlogin.lst[Userlogin.pos])
+        if group == "admin":
+            obj.usergroup = request.form["usergroup"]
+        if request.form["password"] != "":
+            obj.password = Userlogin.set_password(request.form["password"])
+        Userlogin.update(obj.id)
+    elif option == "first":
+        Userlogin.first()
+    elif option == "previous":
+        Userlogin.previous()
+    elif option == "next":
+        Userlogin.nextrec()
+    elif option == "last":
+        Userlogin.last()
+    elif option == "exit":
+        return render_template("index.html", ulogin=session.get("user"),
+                               kpis=analise.summary_kpis(), ativo="home")
+
+    prev_option = option
+    if group == "admin":
+        butshow = "enabled"
+        butedit = "disabled"
+
+    if option == "insert" or len(Userlogin.lst) == 0:
+        id = 0
+        user = ""
+        usergroup = ""
+        password = ""
+    else:
+        obj = Userlogin.current(Userlogin.lst[Userlogin.pos])
+        id = obj.id
+        user = obj.user
+        usergroup = obj.usergroup
+        password = ""
+    return render_template("userlogin.html", butshow=butshow, butedit=butedit,
+                           msg=msg, id=id, user=user, usergroup=usergroup,
+                           password=password, ulogin=session.get("user"),
+                           group=group, ativo="users")
 
 
 # ---------------------------------------------------------------------------
@@ -44,7 +171,8 @@ carregar_dados()
 @app.route("/")
 def index():
     kpis = analise.summary_kpis()
-    return render_template("index.html", kpis=kpis, ativo="home")
+    return render_template("index.html", kpis=kpis, ativo="home",
+                           ulogin=session.get("user"))
 
 
 # ---------------------------------------------------------------------------

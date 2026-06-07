@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar · G12</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="login-screen">
+        <div class="login-card">
+            <div class="login-brand">
+                <span class="brand-mark">G12</span>
+                <span class="brand-sub">Gestão de Dados Académicos</span>
+            </div>
+            <h1>Entrar</h1>
+            <p class="login-sub">Acede à plataforma com a tua conta.</p>
+
+            {% if resul and resul != "Valid" %}
+                <div class="flash flash-erro">{{ resul }}</div>
+            {% endif %}
+
+            <form method="post" action="{{ url_for('chklogin') }}">
+                <div class="field">
+                    <label>Utilizador</label>
+                    <input type="text" name="user" value="{{ user }}" autofocus required>
+                </div>
+                <div class="field">
+                    <label>Palavra-passe</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button class="btn btn-primary login-btn" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

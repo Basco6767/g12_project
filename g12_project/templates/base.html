@@ -22,6 +22,13 @@
             <a href="{{ url_for('graduates') }}" class="{{ 'on' if ativo=='graduates' }}">Graduados</a>
             <a href="{{ url_for('memberships') }}" class="{{ 'on' if ativo=='memberships' }}">Parcerias</a>
             <a href="{{ url_for('analysis') }}" class="{{ 'on' if ativo=='analysis' }}">Análise</a>
+            {% if session.user %}
+                <a href="{{ url_for('userlogin') }}" class="{{ 'on' if ativo=='users' }}">Users</a>
+                <a href="{{ url_for('logoff') }}" class="nav-logout">Logoff</a>
+                <span class="nav-user">User: {{ session.user }}</span>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="{{ 'on' if ativo=='login' }}">Login</a>
+            {% endif %}
         </nav>
     </header>
 

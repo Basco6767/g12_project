@@ -279,3 +279,54 @@ tbody tr:hover { background: rgba(43,103,119,.04); }
     .topbar { padding: 14px 18px; }
     .page-head h1 { font-size: 32px; }
 }
+
+/* ---------- Login ---------- */
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.login-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(31,78,90,.08);
+}
+.login-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+.login-card h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 34px;
+    letter-spacing: -1px;
+}
+.login-sub { color: var(--muted); margin-bottom: 24px; }
+.login-card .field { margin-bottom: 16px; }
+.login-btn { width: 100%; margin-top: 6px; text-align: center; }
+
+/* ---------- User info na barra ---------- */
+.nav-user {
+    color: var(--muted);
+    font-size: 14px;
+    padding: 7px 6px 7px 14px;
+    border-left: 1px solid var(--line);
+    margin-left: 6px;
+}
+.nav-logout {
+    text-decoration: none;
+    color: var(--err-ink);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 15px;
+}
+.nav-logout:hover { background: var(--err-bg); }

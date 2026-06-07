@@ -35,3 +35,29 @@ Depois disso, pode-se correr o `app.py` e abrir http://127.0.0.1:5000 no browser
 2. Análise (Pandas) — inscrições por mês/ano, receita e fee médio por ano.
 3. Gráficos (Matplotlib) — série temporal, barras por ano, receita/fee médio.
 4. Interface — painel de KPIs, pesquisa, mensagens de feedback, responsivo.
+
+## Login (autenticação)
+
+A aplicação tem autenticação baseada na classe `Userlogin` (lição 10), derivada
+de `Gclass`. As contas estão na tabela `Userlogin` da base de dados, com as
+palavras-passe encriptadas com **bcrypt**. A validação é feita pelo método
+`chk_password`, que devolve `Valid`, `Wrong password` ou `No existent user`.
+
+Há dois grupos de utilizadores: o grupo **admin** pode criar, editar e remover
+utilizadores (página "Users"); os restantes só podem alterar a própria password.
+
+Credenciais iniciais:
+
+| Utilizador | Grupo  | Palavra-passe |
+|-----------|--------|----------------|
+| root      | admin  | 1234           |
+| vasco     | users  | vasco123       |
+| sofia     | users  | sofia123       |
+| tania     | users  | tania123       |
+| maria     | users  | maria123       |
+| rodrigo   | users  | rodrigo123     |
+| professor | admin  | professor123   |
+
+Para recriar a tabela de utilizadores numa base de dados limpa:
+
+    python criar_utilizadores.py
