@@ -1,78 +1,92 @@
+
+
+/* :root é o "topo" do documento. As variáveis aqui definidas
+   (começadas por --) ficam disponíveis em TODO o CSS e usam-se
+   com var(--nome). Assim criou-se aqui um indice de cores para se poder chamar dee forma mais fácil */
+   
+   
 :root {
-    --bg: #f7f4ec;
-    --ink: #1f2421;
-    --teal: #2b6777;
-    --teal-dark: #1f4e5a;
-    --gold: #c8a35b;
-    --card: #fffdf8;
-    --line: #e4ddcd;
-    --muted: #6b6657;
-    --ok-bg: #e3efe6;
-    --ok-ink: #2f6a45;
-    --err-bg: #f5e2df;
-    --err-ink: #9c3b2e;
+    --bg: #f7f4ec;        /* cor de fundo da página (creme) */
+    --ink: #1f2421;       /* cor do texto principal (quase preto) */
+    --teal: #2b6777;      /* cor principal do site (azul-esverdeado) */
+    --teal-dark: #1f4e5a; /* versão mais escura, para realçar */
+    --gold: #c8a35b;      /* dourado */
+    --card: #fffdf8;      /* fundo dos cartões/painéis (branco) */
+    --line: #e4ddcd;      /* cor das linhas e bordas */
+    --muted: #6b6657;     /* texto secundário, menos importante */
+    --ok-bg: #e3efe6;     /* fundo das mensagens de sucesso (verde claro) */
+    --ok-ink: #2f6a45;    /* texto das mensagens de sucesso (verde) */
+    --err-bg: #f5e2df;    /* fundo das mensagens de erro (vermelho claro) */
+    --err-ink: #9c3b2e;   /* texto das mensagens de erro (vermelho) */
 }
 
+/* O seletor * aplica-se a todos os elementos (um "reset" inicial).
+   box-sizing: border-box faz com que o padding e a borda contem
+   dentro da largura definida (evita que as caixas "estourem" o
+   tamanho). margin/padding a 0 remove os espaços por omissão do
+   browser, para partir de uma base limpa. */
+   
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Estilos do corpo da página (tudo o que é visível). */
 body {
-    font-family: 'Spline Sans', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.55;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    font-family: 'Spline Sans', sans-serif; /* fonte do texto corrido */
+    background: var(--bg);                  /* fundo creme (variável) */
+    color: var(--ink);                      /* cor do texto (variável) */
+    line-height: 1.55;                      /* espaço entre linhas */
+    min-height: 100vh;                      /* ocupa pelo menos todo o ecrã */
+    display: flex;                          /* layout flexível... */
+    flex-direction: column;                 /* ...em coluna (topo->fundo) */
 }
 
-/* ---------- Top bar ---------- */
+/* ---------- Barra de topo ---------- */
 .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 40px;
-    border-bottom: 1px solid var(--line);
-    background: var(--card);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: flex;                  /* coloca os filhos em linha */
+    align-items: center;            /* alinha-os verticalmente ao centro */
+    justify-content: space-between; /* marca à esquerda, menu à direita */
+    padding: 18px 40px;             /* espaço interno (vertical horizontal) */
+    border-bottom: 1px solid var(--line); /* linha separadora em baixo */
+    background: var(--card);        /* fundo branco quente */
+    position: sticky;               /* a barra "cola" ao topo... */
+    top: 0;                         /* ...quando se faz scroll */
+    z-index: 10;                    /* fica por cima do resto */
+    flex-wrap: wrap;                /* reorganiza em ecrãs pequenos */
+    gap: 12px;                      /* espaço entre os elementos */
 }
-.brand { display: flex; align-items: baseline; gap: 12px; }
+.brand { display: flex; align-items: baseline; gap: 12px; } /* a "marca" G12 + subtítulo */
 .brand-mark {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
+    font-family: 'Fraunces', serif; /* fonte serifada, de destaque */
+    font-weight: 900;               /* muito negrito */
     font-size: 30px;
     color: var(--teal);
-    letter-spacing: -1px;
+    letter-spacing: -1px;           /* letras ligeiramente mais juntas */
 }
 .brand-sub {
     font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    letter-spacing: 2px;            /* letras mais espaçadas */
+    text-transform: uppercase;      /* tudo em maiúsculas */
     color: var(--muted);
 }
-.nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; } /* o menu de navegação */
 .nav a {
-    text-decoration: none;
+    text-decoration: none;          /* remove o sublinhado dos links */
     color: var(--muted);
     padding: 7px 14px;
-    border-radius: 999px;
+    border-radius: 999px;           /* cantos totalmente arredondados (pílula) */
     font-weight: 500;
     font-size: 15px;
-    transition: all .18s ease;
+    transition: all .18s ease;      /* anima suavemente as mudanças (hover) */
 }
-.nav a:hover { color: var(--teal); background: rgba(43,103,119,.07); }
-.nav a.on { color: #fff; background: var(--teal); }
+.nav a:hover { color: var(--teal); background: rgba(43,103,119,.07); } /* ao passar o rato */
+.nav a.on { color: #fff; background: var(--teal); } /* a página atual (destacada) */
 
-/* ---------- Layout ---------- */
+/* ---------- Estrutura geral ---------- */
 .wrap {
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
+    max-width: 1100px;  /* largura máxima do conteúdo */
+    margin: 0 auto;     /* centra o conteúdo horizontalmente */
     padding: 40px;
-    flex: 1;
+    flex: 1;            /* ocupa o espaço disponível (empurra o rodapé p/ baixo) */
 }
 .foot {
     text-align: center;
@@ -82,21 +96,23 @@ body {
     border-top: 1px solid var(--line);
 }
 
-/* ---------- Page heads ---------- */
+/* ---------- Cabeçalhos de página ---------- */
 .page-head { margin-bottom: 30px; }
 .page-head h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', serif; /* título com a fonte de destaque */
     font-weight: 900;
     font-size: 44px;
     letter-spacing: -1.5px;
     line-height: 1.05;
 }
-.page-head h1 .accent { color: var(--gold); }
+.page-head h1 .accent { color: var(--gold); } /* parte do título a dourado */
 .page-head p { color: var(--muted); margin-top: 8px; max-width: 620px; }
 
-/* ---------- KPI cards ---------- */
+/* ---------- Cartões de indicadores (KPI) ---------- */
 .kpi-grid {
-    display: grid;
+    display: grid;  /* grelha */
+    /* auto-fit + minmax: cria tantas colunas quantas couberem,
+       cada uma com no mínimo 180px. Responsivo sem media queries. */
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     margin-bottom: 34px;
@@ -104,23 +120,25 @@ body {
 .kpi {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 14px;    /* cantos arredondados */
     padding: 22px;
-    position: relative;
-    overflow: hidden;
+    position: relative;     /* permite posicionar o ::before lá dentro */
+    overflow: hidden;       /* corta o que sair das bordas arredondadas */
 }
+/* ::before cria um elemento decorativo ANTES do conteúdo do cartão.
+   Aqui é a faixa colorida vertical no lado esquerdo. */
 .kpi::before {
-    content: "";
-    position: absolute;
+    content: "";            /* obrigatório para o ::before aparecer */
+    position: absolute;     /* posicionado em relação ao cartão */
     top: 0; left: 0;
-    width: 4px; height: 100%;
+    width: 4px; height: 100%; /* uma faixa fina, altura toda */
     background: var(--teal);
 }
-.kpi.gold::before { background: var(--gold); }
+.kpi.gold::before { background: var(--gold); } /* faixa dourada nos cartões 'gold' */
 .kpi .val {
     font-family: 'Fraunces', serif;
     font-weight: 900;
-    font-size: 34px;
+    font-size: 34px;        /* o número grande do indicador */
     color: var(--teal-dark);
     line-height: 1;
 }
@@ -130,10 +148,10 @@ body {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--muted);
+    color: var(--muted);    /* a etiqueta do indicador */
 }
 
-/* ---------- Cards / panels ---------- */
+/* ---------- Painéis / caixas de conteúdo ---------- */
 .panel {
     background: var(--card);
     border: 1px solid var(--line);
@@ -148,7 +166,7 @@ body {
     font-weight: 600;
 }
 
-/* ---------- Toolbar (search + add toggle) ---------- */
+/* ---------- Barra de ferramentas (pesquisa + botões) ---------- */
 .toolbar {
     display: flex;
     gap: 12px;
@@ -159,23 +177,26 @@ body {
 .search {
     display: flex;
     gap: 8px;
-    flex: 1;
+    flex: 1;            /* ocupa o espaço disponível */
     min-width: 240px;
 }
 .search input {
     flex: 1;
     padding: 11px 16px;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 999px;   /* campo de pesquisa em forma de pílula */
     font-size: 15px;
-    font-family: inherit;
+    font-family: inherit;   /* usa a mesma fonte do resto */
     background: var(--card);
 }
+/* :focus = quando o campo está selecionado. Mostra um contorno teal. */
 .search input:focus { outline: 2px solid var(--teal); border-color: transparent; }
 
+/* ---------- Botões ---------- */
+/* .btn é o estilo BASE, comum a todos os botões. */
 .btn {
     border: none;
-    cursor: pointer;
+    cursor: pointer;        /* mãozinha ao passar o rato */
     font-family: inherit;
     font-size: 15px;
     font-weight: 500;
@@ -185,22 +206,23 @@ body {
     display: inline-block;
     transition: all .15s ease;
 }
-.btn-primary { background: var(--teal); color: #fff; }
+/* Variantes do botão, conforme a ação: */
+.btn-primary { background: var(--teal); color: #fff; }          /* ação principal */
 .btn-primary:hover { background: var(--teal-dark); }
-.btn-ghost { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+.btn-ghost { background: transparent; color: var(--teal); border: 1px solid var(--teal); } /* ação secundária */
 .btn-ghost:hover { background: rgba(43,103,119,.08); }
-.btn-danger { background: transparent; color: var(--err-ink); border: 1px solid var(--err-ink); padding: 6px 14px; font-size: 13px; }
+.btn-danger { background: transparent; color: var(--err-ink); border: 1px solid var(--err-ink); padding: 6px 14px; font-size: 13px; } /* ação destrutiva (apagar) */
 .btn-danger:hover { background: var(--err-bg); }
 
-/* ---------- Forms ---------- */
+/* ---------- Formulários ---------- */
 .form-row {
-    display: grid;
+    display: grid;  /* organiza os campos em grelha responsiva */
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 14px;
     margin-bottom: 16px;
 }
 .field label {
-    display: block;
+    display: block;     /* a etiqueta fica numa linha própria */
     font-size: 13px;
     color: var(--muted);
     margin-bottom: 5px;
@@ -218,14 +240,16 @@ body {
 }
 .field input:focus { outline: 2px solid var(--teal); border-color: transparent; }
 
+/* .collapsible: bloco escondido por omissão (display:none),
+   que fica visível quando ganha a classe 'open' (via JavaScript). */
 .collapsible { display: none; }
 .collapsible.open { display: block; }
 
-/* ---------- Tables ---------- */
-.count { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+/* ---------- Tabelas ---------- */
+.count { color: var(--muted); font-size: 14px; margin-bottom: 12px; } /* "X resultados" */
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse;  /* junta as bordas das células numa só */
     font-size: 15px;
 }
 thead th {
@@ -235,57 +259,65 @@ thead th {
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--muted);
-    border-bottom: 2px solid var(--line);
+    border-bottom: 2px solid var(--line); /* linha mais grossa sob o cabeçalho */
 }
 tbody td {
     padding: 12px 14px;
     border-bottom: 1px solid var(--line);
     vertical-align: top;
 }
-tbody tr:hover { background: rgba(43,103,119,.04); }
-.id-cell { font-family: 'Fraunces', serif; font-weight: 600; color: var(--teal); }
-.empty { padding: 40px; text-align: center; color: var(--muted); }
+tbody tr:hover { background: rgba(43,103,119,.04); } /* realça a linha sob o rato */
+.id-cell { font-family: 'Fraunces', serif; font-weight: 600; color: var(--teal); } /* a coluna do ID */
+.empty { padding: 40px; text-align: center; color: var(--muted); } /* mensagem "sem dados" */
 
-/* ---------- Charts ---------- */
+/* ---------- Gráficos ---------- */
 .chart {
     width: 100%;
     border-radius: 12px;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto;     /* centra a imagem do gráfico */
 }
 .chart-note { color: var(--muted); font-size: 14px; margin-top: 10px; }
 
-/* ---------- Flash messages ---------- */
+/* ---------- Mensagens de feedback (flash) ---------- */
 .flashes { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
 .flash {
     padding: 12px 18px;
     border-radius: 10px;
     font-size: 15px;
 }
-.flash-ok { background: var(--ok-bg); color: var(--ok-ink); }
-.flash-erro { background: var(--err-bg); color: var(--err-ink); }
+.flash-ok { background: var(--ok-bg); color: var(--ok-ink); }     /* sucesso (verde) */
+.flash-erro { background: var(--err-bg); color: var(--err-ink); } /* erro (vermelho) */
 
-/* ---------- Page-load reveal ---------- */
+/* ---------- Animação de entrada da página ---------- */
+/* Cada filho direto de .wrap entra com a animação 'rise'.
+   Os nth-child dão um pequeno atraso a cada um, criando um
+   efeito escalonado (aparecem em sequência). */
 .wrap > * { animation: rise .5s ease backwards; }
 .wrap > *:nth-child(2) { animation-delay: .05s; }
 .wrap > *:nth-child(3) { animation-delay: .1s; }
+/* @keyframes define a animação: começa transparente e 10px mais
+   abaixo, acaba opaca e na posição normal (efeito de "subir"). */
 @keyframes rise {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------- Responsividade (ecrãs pequenos) ---------- */
+/* @media aplica estes estilos só quando o ecrã tem 640px ou menos
+   (telemóveis). Reduz espaçamentos e o tamanho dos títulos. */
 @media (max-width: 640px) {
     .wrap { padding: 24px 18px; }
     .topbar { padding: 14px 18px; }
     .page-head h1 { font-size: 32px; }
 }
 
-/* ---------- Login ---------- */
+/* ---------- Página de login ---------- */
 .login-screen {
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;    /* centra o cartão vertical e... */
+    justify-content: center;/* ...horizontalmente no ecrã */
     padding: 24px;
 }
 .login-card {
@@ -295,7 +327,7 @@ tbody tr:hover { background: rgba(43,103,119,.04); }
     padding: 40px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 10px 40px rgba(31,78,90,.08);
+    box-shadow: 0 10px 40px rgba(31,78,90,.08); /* sombra suave */
 }
 .login-brand {
     display: flex;
@@ -311,19 +343,19 @@ tbody tr:hover { background: rgba(43,103,119,.04); }
 }
 .login-sub { color: var(--muted); margin-bottom: 24px; }
 .login-card .field { margin-bottom: 16px; }
-.login-btn { width: 100%; margin-top: 6px; text-align: center; }
+.login-btn { width: 100%; margin-top: 6px; text-align: center; } /* botão de login a toda a largura */
 
-/* ---------- User info na barra ---------- */
+/* ---------- Info do utilizador na barra ---------- */
 .nav-user {
     color: var(--muted);
     font-size: 14px;
     padding: 7px 6px 7px 14px;
-    border-left: 1px solid var(--line);
+    border-left: 1px solid var(--line); /* separador à esquerda */
     margin-left: 6px;
 }
 .nav-logout {
     text-decoration: none;
-    color: var(--err-ink);
+    color: var(--err-ink);  /* vermelho (ação de sair) */
     padding: 7px 14px;
     border-radius: 999px;
     font-weight: 500;

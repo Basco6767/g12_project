@@ -92,9 +92,9 @@ def userlogin():
     ulogin = session.get("user")
     user_id = Userlogin.get_user_id(ulogin)
     group = Userlogin.obj[user_id].usergroup
-    if group != "admin":
-        butshow = "enabled"
-        butedit = "disabled"
+    # Estado por omissão: botões de navegação/ação visíveis, edição bloqueada.
+    butshow = "enabled"
+    butedit = "disabled"
     option = request.args.get("option")
     if option == "edit":
         butshow = "disabled"
@@ -144,9 +144,6 @@ def userlogin():
                                kpis=analise.summary_kpis(), ativo="home")
 
     prev_option = option
-    if group == "admin":
-        butshow = "enabled"
-        butedit = "disabled"
 
     if option == "insert" or len(Userlogin.lst) == 0:
         id = 0

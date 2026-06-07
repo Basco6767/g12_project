@@ -48,15 +48,15 @@ utilizadores (página "Users"); os restantes só podem alterar a própria passwo
 
 Credenciais iniciais:
 
-| Utilizador | Grupo  | Palavra-passe |
-|-----------|--------|----------------|
-| root      | admin  | 1234           |
-| vasco     | users  | vasco123       |
-| sofia     | users  | sofia123       |
-| tania     | users  | tania123       |
-| maria     | users  | maria123       |
-| rodrigo   | users  | rodrigo123     |
-| professor | admin  | professor123   |
+| Utilizador | Grupo  | Palavra-passe  |
+|------------|--------|----------------|
+| root       | admin  | 1234           |
+| vasco      | users  | vasco123       |
+| sofia      | users  | sofia123       |
+| tania      | users  | tania123       |
+| maria      | users  | maria123       |
+| rodrigo    | users  | rodrigo123     |
+| professor  | admin  | professor123   |
 
 Para recriar a tabela de utilizadores numa base de dados limpa:
 
