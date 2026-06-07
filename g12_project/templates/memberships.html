@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Parcerias · G12{% endblock %}
 {% block content %}
+
 <div class="page-head">
     <h1>Parcerias</h1>
+    <!-- descrição da página para o utilizador perceber o que está a ver -->
     <p>Parcerias de universidades com associações académicas. Cada parceria liga
        uma universidade a uma associação, com a data de registo e o valor da quota (fee).</p>
 </div>
 
 <div class="toolbar">
+    <!-- formulário de pesquisa — envia o termo como parâmetro GET na URL -->
     <form class="search" method="get" action="{{ url_for('memberships') }}">
         <input type="text" name="search" placeholder="Pesquisar por universidade ou associação…" value="{{ termo }}">
         <button class="btn btn-primary" type="submit">Pesquisar</button>
@@ -16,12 +19,14 @@
 
 <div class="panel">
     <div class="count">
+        <!-- mostra mensagem diferente consoante há ou não pesquisa ativa -->
         {% if termo %}
             {{ total }} resultado(s) para "{{ termo }}"
         {% else %}
             {{ total }} parceria(s)
         {% endif %}
     </div>
+
     {% if lista %}
     <table>
         <thead>
@@ -35,6 +40,7 @@
         <tbody>
         {% for r in lista %}
             <tr>
+                <!-- mostra o ID e o nome — o ID vem da BD, o nome foi resolvido no app.py -->
                 <td><span class="id-cell">{{ r.university_id }}</span> · {{ r.university_name }}</td>
                 <td><span class="id-cell">{{ r.association_id }}</span> · {{ r.association_name }}</td>
                 <td>{{ r.registration_date }}</td>
@@ -44,7 +50,9 @@
         </tbody>
     </table>
     {% else %}
+        <!-- lista vazia — pode acontecer se a pesquisa não devolver resultados -->
         <div class="empty">Sem inscrições para mostrar.</div>
     {% endif %}
 </div>
+
 {% endblock %}
